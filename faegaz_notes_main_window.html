@@ -1,0 +1,394 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.app {
+  width: 100%;
+  min-height: 540px;
+  background: #080810;
+  border-radius: 16px;
+  border: 1px solid rgba(168,85,247,0.15);
+  display: flex;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, sans-serif;
+  position: relative;
+}
+
+.app::before {
+  content: '';
+  position: absolute;
+  width: 350px; height: 350px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 65%);
+  top: -100px; left: -60px;
+  pointer-events: none;
+}
+
+.app::after {
+  content: '';
+  position: absolute;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(234,179,8,0.07) 0%, transparent 65%);
+  bottom: -80px; right: -40px;
+  pointer-events: none;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: 200px;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.02);
+  border-right: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.sidebar-header {
+  padding: 18px 16px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.app-name {
+  font-size: 14px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #c084fc, #a855f7, #eab308);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a855f7, #eab308);
+  box-shadow: 0 0 8px rgba(168,85,247,0.7);
+  flex-shrink: 0;
+  -webkit-text-fill-color: initial;
+}
+
+.search-box {
+  margin: 12px 12px 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+  padding: 7px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.search-icon { font-size: 11px; color: rgba(255,255,255,0.2); }
+.search-placeholder { font-size: 11px; color: rgba(255,255,255,0.18); }
+
+.nav { padding: 10px 8px; flex: 1; }
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin-bottom: 2px;
+  cursor: pointer;
+}
+
+.nav-item.active {
+  background: rgba(168,85,247,0.12);
+  border: 1px solid rgba(168,85,247,0.15);
+}
+
+.nav-icon {
+  width: 16px; height: 16px;
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.nav-icon.purple { background: rgba(168,85,247,0.15); color: #a855f7; }
+.nav-icon.yellow { background: rgba(234,179,8,0.12); color: #eab308; }
+.nav-icon.gray { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.3); }
+
+.nav-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+}
+
+.nav-item.active .nav-label { color: rgba(255,255,255,0.85); font-weight: 500; }
+
+.nav-count {
+  margin-left: auto;
+  font-size: 10px;
+  color: rgba(168,85,247,0.6);
+  background: rgba(168,85,247,0.1);
+  padding: 1px 6px;
+  border-radius: 10px;
+}
+
+.sidebar-footer {
+  padding: 12px 8px;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+.fp-btn {
+  width: 100%;
+  background: rgba(168,85,247,0.1);
+  border: 1px solid rgba(168,85,247,0.2);
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.fp-btn-text { font-size: 11px; color: rgba(168,85,247,0.8); font-weight: 500; }
+.fp-btn-badge { margin-left: auto; font-size: 9px; color: rgba(168,85,247,0.45); background: rgba(168,85,247,0.08); padding: 2px 6px; border-radius: 4px; }
+
+/* ── Ana içerik ── */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.topbar {
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.page-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+}
+
+.topbar-actions { display: flex; gap: 8px; }
+
+.btn-ghost {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 7px;
+  padding: 6px 12px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.btn-accent {
+  background: rgba(168,85,247,0.15);
+  border: 1px solid rgba(168,85,247,0.25);
+  border-radius: 7px;
+  padding: 6px 12px;
+  font-size: 11px;
+  color: #a855f7;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.content { flex: 1; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 8px; }
+
+/* ── Not kartları ── */
+.note-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 10px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: background 0.15s;
+  border-left: 2px solid rgba(168,85,247,0.4);
+}
+
+.note-card:hover { background: rgba(255,255,255,0.05); }
+
+.note-card.active {
+  background: rgba(168,85,247,0.07);
+  border-color: rgba(168,85,247,0.25);
+  border-left-color: #a855f7;
+}
+
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 5px; }
+.card-title { font-size: 12.5px; font-weight: 500; color: rgba(255,255,255,0.8); }
+.card-date { font-size: 10px; color: rgba(255,255,255,0.18); }
+.card-preview { font-size: 11.5px; color: rgba(255,255,255,0.38); line-height: 1.5; }
+
+.word-card {
+  background: rgba(234,179,8,0.05);
+  border: 1px solid rgba(234,179,8,0.12);
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-left: 2px solid rgba(234,179,8,0.4);
+}
+
+.word-en { font-size: 12px; color: rgba(234,179,8,0.7); font-style: italic; min-width: 90px; }
+.word-arrow { font-size: 12px; color: rgba(255,255,255,0.12); }
+.word-tr { font-size: 12.5px; color: rgba(255,255,255,0.7); font-weight: 500; flex: 1; }
+.word-tag { font-size: 9.5px; color: rgba(234,179,8,0.45); background: rgba(234,179,8,0.07); padding: 2px 7px; border-radius: 4px; }
+
+/* ── Todo ── */
+.todo-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.todo-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+.todo-row:last-child { border-bottom: none; }
+
+.tcheck {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  flex-shrink: 0;
+}
+
+.tcheck.done {
+  background: rgba(168,85,247,0.2);
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  color: #a855f7;
+  font-size: 9px;
+}
+
+.ttext { font-size: 12px; color: rgba(255,255,255,0.6); }
+.ttext.done { text-decoration: line-through; color: rgba(255,255,255,0.2); }
+
+.section-label {
+  font-size: 10px;
+  color: rgba(255,255,255,0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  padding: 4px 0 6px;
+}
+
+scrollbar-width: thin;
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 2px; }
+</style>
+
+<div class="app">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <div class="app-name">
+        <div class="app-dot"></div>
+        FaegAz Notes
+      </div>
+      <div class="search-box">
+        <span class="search-icon">⌕</span>
+        <span class="search-placeholder">Ara...</span>
+      </div>
+    </div>
+
+    <div class="nav">
+      <div class="nav-item active">
+        <div class="nav-icon purple">✎</div>
+        <span class="nav-label">Notlar</span>
+        <span class="nav-count">12</span>
+      </div>
+      <div class="nav-item">
+        <div class="nav-icon gray">✓</div>
+        <span class="nav-label">Görevler</span>
+      </div>
+      <div class="nav-item">
+        <div class="nav-icon yellow">A</div>
+        <span class="nav-label">Kelimeler</span>
+        <span class="nav-count" style="color:rgba(234,179,8,0.6);background:rgba(234,179,8,0.08);">8</span>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="fp-btn">
+        <div class="app-dot" style="width:6px;height:6px;"></div>
+        <span class="fp-btn-text">Floating Panel</span>
+        <span class="fp-btn-badge">Alt+Shift+1</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ana içerik -->
+  <div class="main">
+    <div class="topbar">
+      <span class="page-title">Notlar</span>
+      <div class="topbar-actions">
+        <button class="btn-ghost">Sırala</button>
+        <button class="btn-accent">+ Yeni Not</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="section-label">Son eklenenler</div>
+
+      <div class="note-card active">
+        <div class="card-top">
+          <span class="card-title">Satisfactory — Fabrika notları</span>
+          <span class="card-date">2dk önce</span>
+        </div>
+        <div class="card-preview">Iron plate = 30/dk. Constructor x4 kur, conveyor belt tier 2 yeterli. Copper wire için ayrı hat...</div>
+      </div>
+
+      <div class="note-card">
+        <div class="card-top">
+          <span class="card-title">Steam indirimleri</span>
+          <span class="card-date">1sa önce</span>
+        </div>
+        <div class="card-preview">Half-Life Alyx bak, Deep Rock Galactic indirimde mi kontrol et</div>
+      </div>
+
+      <div class="note-card">
+        <div class="card-top">
+          <span class="card-title">Hesaplamalar</span>
+          <span class="card-date">dün</span>
+        </div>
+        <div class="card-preview">120 ÷ 4 = 30 ✓  —  Belt kapasitesi: 60 item/dk</div>
+      </div>
+
+      <div class="section-label" style="margin-top:8px;">Son kaydedilen kelimeler</div>
+
+      <div class="word-card">
+        <span class="word-en">resilient</span>
+        <span class="word-arrow">→</span>
+        <span class="word-tr">dayanıklı, esnek</span>
+        <span class="word-tag">çeviri</span>
+      </div>
+
+      <div class="word-card">
+        <span class="word-en">adjacent</span>
+        <span class="word-arrow">→</span>
+        <span class="word-tr">bitişik, yakın</span>
+        <span class="word-tag">çeviri</span>
+      </div>
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,419 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+.scene {
+  min-height: 560px;
+  background: #080810;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+  padding: 36px 28px;
+  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.scene::before {
+  content: '';
+  position: absolute;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(168,85,247,0.12) 0%, transparent 65%);
+  top: -120px; left: -80px;
+  pointer-events: none;
+}
+
+.scene::after {
+  content: '';
+  position: absolute;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(234,179,8,0.08) 0%, transparent 65%);
+  bottom: -80px; right: -60px;
+  pointer-events: none;
+}
+
+.grad-text {
+  background: linear-gradient(90deg, #c084fc, #a855f7, #eab308);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.grad-line {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(168,85,247,0.6), rgba(234,179,8,0.4), transparent);
+}
+
+.window {
+  width: 272px;
+  border-radius: 16px;
+  border: 1px solid rgba(168,85,247,0.18);
+  background: rgba(12,10,20,0.82);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 0 0 1px rgba(168,85,247,0.08) inset;
+}
+
+.titlebar {
+  padding: 11px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.015);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.dot-grad {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a855f7, #eab308);
+  box-shadow: 0 0 8px rgba(168,85,247,0.7);
+  flex-shrink: 0;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.badge {
+  font-size: 9px;
+  color: rgba(168,85,247,0.6);
+  background: rgba(168,85,247,0.08);
+  border: 1px solid rgba(168,85,247,0.15);
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+  font-weight: 500;
+}
+
+.close {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.tab {
+  flex: 1;
+  padding: 9px 4px;
+  font-size: 11px;
+  font-weight: 400;
+  text-align: center;
+  color: rgba(255,255,255,0.22);
+  position: relative;
+  letter-spacing: 0.02em;
+}
+
+.tab.active {
+  font-weight: 500;
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 20%; right: 20%;
+  height: 1.5px;
+  background: linear-gradient(90deg, #a855f7, #eab308);
+  border-radius: 2px 2px 0 0;
+}
+
+.body {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.note {
+  background: rgba(168,85,247,0.06);
+  border-radius: 9px;
+  padding: 9px 11px;
+  border-left: 1.5px solid rgba(168,85,247,0.5);
+}
+
+.note-plain {
+  background: rgba(255,255,255,0.03);
+  border-radius: 9px;
+  padding: 9px 11px;
+}
+
+.note-text {
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.62);
+  line-height: 1.55;
+}
+
+.note-meta {
+  font-size: 10px;
+  color: rgba(255,255,255,0.16);
+  margin-top: 4px;
+}
+
+.note-word {
+  background: rgba(234,179,8,0.07);
+  border-radius: 9px;
+  padding: 9px 11px;
+  border-left: 1.5px solid rgba(234,179,8,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.word-pair {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.word-en {
+  font-size: 11px;
+  color: rgba(234,179,8,0.7);
+  font-style: italic;
+}
+
+.word-tr {
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+  font-weight: 500;
+}
+
+.word-badge {
+  font-size: 9px;
+  color: rgba(234,179,8,0.5);
+  background: rgba(234,179,8,0.07);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.input-area {
+  padding: 2px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-row {
+  display: flex;
+  gap: 6px;
+}
+
+.fake-input {
+  flex: 1;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.18);
+  font-family: inherit;
+}
+
+.add-btn {
+  background: rgba(168,85,247,0.15);
+  border: 1px solid rgba(168,85,247,0.25);
+  border-radius: 8px;
+  padding: 8px 13px;
+  color: #a855f7;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.scan-btn {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(168,85,247,0.2);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.scan-icon {
+  width: 14px; height: 14px;
+  border-radius: 3px;
+  border: 1.5px solid rgba(168,85,247,0.5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 8px;
+  color: rgba(168,85,247,0.7);
+  flex-shrink: 0;
+}
+
+.scan-label { font-size: 10.5px; }
+.scan-hint { font-size: 9.5px; color: rgba(255,255,255,0.18); margin-left: auto; }
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.check {
+  width: 15px; height: 15px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.14);
+  flex-shrink: 0;
+}
+
+.check.done {
+  background: rgba(168,85,247,0.2);
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  color: #a855f7;
+  font-size: 9px;
+}
+
+.todo-text {
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.6);
+}
+
+.todo-text.done {
+  text-decoration: line-through;
+  color: rgba(255,255,255,0.18);
+}
+
+.win-label {
+  font-size: 10px;
+  color: rgba(255,255,255,0.18);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.grad-line-full {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(168,85,247,0.3), rgba(234,179,8,0.3), transparent);
+  margin: 4px 10px 8px;
+}
+</style>
+
+<div class="scene">
+
+  <div>
+    <div class="win-label">Notlar sekmesi</div>
+    <div class="window">
+      <div class="titlebar">
+        <div class="title">
+          <div class="dot-grad"></div>
+          <span class="grad-text">FaegAz Notes</span>
+        </div>
+        <div class="controls">
+          <span class="badge">Alt+Shift+1</span>
+          <div class="close">✕</div>
+        </div>
+      </div>
+      <div class="tabs">
+        <div class="tab active" style="color:#c084fc;">Notlar</div>
+        <div class="tab">Görevler</div>
+      </div>
+      <div class="body">
+        <div class="note-word">
+          <div class="word-pair">
+            <div class="word-en">resilient</div>
+            <div class="word-tr">dayanıklı, esnek</div>
+          </div>
+          <div class="word-badge">çeviri</div>
+        </div>
+        <div class="note">
+          <div class="note-text">Iron plate = 30/dk. Constructor x4 kur.</div>
+          <div class="note-meta">2dk önce</div>
+        </div>
+        <div class="note-plain">
+          <div class="note-text">120 ÷ 4 = 30 ✓</div>
+          <div class="note-meta">1sa önce</div>
+        </div>
+      </div>
+      <div class="grad-line-full"></div>
+      <div class="input-area">
+        <div class="input-row">
+          <div class="fake-input">Not ekle...</div>
+          <div class="add-btn">+</div>
+        </div>
+        <div class="scan-btn">
+          <div class="scan-icon">⬚</div>
+          <span class="scan-label">Ekrandan kelime seç</span>
+          <span class="scan-hint">tıkla</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="win-label">Görevler sekmesi</div>
+    <div class="window">
+      <div class="titlebar">
+        <div class="title">
+          <div class="dot-grad"></div>
+          <span class="grad-text">FaegAz Notes</span>
+        </div>
+        <div class="controls">
+          <span class="badge">Alt+Shift+1</span>
+          <div class="close">✕</div>
+        </div>
+      </div>
+      <div class="tabs">
+        <div class="tab">Notlar</div>
+        <div class="tab active" style="color:#c084fc;">Görevler</div>
+      </div>
+      <div style="padding: 6px 0 0;">
+        <div class="todo-item">
+          <div class="check done">✓</div>
+          <div class="todo-text done">Argos kurulumunu araştır</div>
+        </div>
+        <div class="todo-item">
+          <div class="check"></div>
+          <div class="todo-text">Electron projesini başlat</div>
+        </div>
+        <div class="todo-item">
+          <div class="check"></div>
+          <div class="todo-text">OCR'ı oyun içinde test et</div>
+        </div>
+        <div class="todo-item" style="border:none;">
+          <div class="check"></div>
+          <div class="todo-text">UI ince ayarlarını yap</div>
+        </div>
+      </div>
+      <div class="grad-line-full"></div>
+      <div class="input-area">
+        <div class="input-row">
+          <div class="fake-input">Görev ekle...</div>
+          <div class="add-btn">+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

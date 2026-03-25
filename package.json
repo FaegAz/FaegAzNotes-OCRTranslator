@@ -1,0 +1,40 @@
+{
+  "name": "faegaz-notes",
+  "version": "1.0.0",
+  "description": "Windows masaüstü overlay not uygulaması — glassmorphism UI",
+  "main": "src/main/index.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win"
+  },
+  "author": "FaegAz",
+  "license": "MIT",
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "dependencies": {
+    "screenshot-desktop": "^1.15.0",
+    "sharp": "^0.33.5",
+    "sql.js": "^1.11.0",
+    "tesseract.js": "^5.1.1"
+  },
+  "build": {
+    "appId": "com.faegaz.notes",
+    "productName": "FaegAz Notes",
+    "disableSanityCheckAsar": true,
+    "win": {
+      "target": "portable",
+      "icon": "logo-square.png"
+    },
+    "files": [
+      "src/**/*",
+      "node_modules/**/*",
+      "package.json",
+      "logo-square.png",
+      "logo.png",
+      "ocr_easyocr.py"
+    ]
+  }
+}
